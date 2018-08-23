@@ -1,5 +1,5 @@
-import os
 
-r = os.listdir('.')
+s = 'ddd sade.py'
+r = s.startswith('d')
 print(r)
-print(os.stat(r[0]))
+
