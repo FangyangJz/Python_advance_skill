@@ -1,22 +1,13 @@
-class Guitar(object):
 
-    def __init__(self, serialNumber, price, builder, model, types, backWood, topWood):
-        self.serialNumber = serialNumber
-        self.price = price
+
+class GuitarSpec(object):
+
+    def __init__(self, builder, model, types, backWood, topWood):
         self.builder = builder
         self.model = model
         self.types = types
         self.backWood = backWood
         self.topWood = topWood
-    
-    def getSerialNumber(self):
-        return self.serialNumber
-    
-    def getPrice(self):
-        return self.price
-
-    def setPrice(self, newPrice):
-        self.price = newPrice
 
     def getBuilder(self):
         return self.builder
@@ -32,6 +23,46 @@ class Guitar(object):
 
     def getTopWood(self):
         return self.topWood
+
+
+class Guitar(GuitarSpec):
+    # python中的封装和java有些区别啊, 
+    # java中的封装是封到一个类里去
+    # 可是python这么干的话, 这不就是继承么. python中的封装是加双下划线'__' 变私有封起来的意思
+    # 当然, python在实例化的初始化时, 也可以传个其他的类的实例作为属性
+    def __init__(self, serialNumber, price, builder, model, types, backWood, topWood):
+        self.serialNumber = serialNumber
+        self.price = price
+        super().__init__(builder, model, types, backWood, topWood)
+
+    def getSerialNumber(self):
+        return self.serialNumber
+
+    def getPrice(self):
+        return self.price
+
+    def setPrice(self, newPrice):
+        self.price = newPrice
+
+
+# class Guitar(object):
+#     # python中的封装和java有些区别啊, 
+#     # java中的封装是封到一个类里去
+#     # 可是python这么干的话, 这不就是继承么. python中的封装是加双下划线'__' 变私有封起来的意思
+#     # 当然, python在实例化的初始化时, 也可以传个其他的类的实例作为属性
+#     def __init__(self, serialNumber, price, guitar_spec:GuitarSpec):
+#         self.serialNumber = serialNumber
+#         self.price = price
+#         self.guitar_spec = guitar_spec
+
+#     def getSerialNumber(self):
+#         return self.serialNumber
+
+#     def getPrice(self):
+#         return self.price
+
+#     def setPrice(self, newPrice):
+#         self.price = newPrice
 
 
 class Inventory(object):

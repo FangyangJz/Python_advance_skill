@@ -1,5 +1,5 @@
 import random
-from c1_RickGuitar_project import Inventory, Guitar
+from c3_RickGuitar_project_encapsulation import Inventory, Guitar, GuitarSpec
 from c1_enums import Builder, Type, Wood
 
 def initializeInventory(guitar_nums=20):
@@ -40,6 +40,7 @@ if __name__ == '__main__':
     # 1. 随机生成20把吉他
     rand_gen_guitar_list = initializeInventory(guitar_nums=2000)
     # print(r)
+    
     # 2. 生产仓库对象，将20把吉他入库
     inventory = Inventory()
     for guitar in rand_gen_guitar_list:
@@ -54,7 +55,8 @@ if __name__ == '__main__':
 
     # 3. 生成Erin想要的吉他
     # print(Builder.FENDER) # 注意这里, python中的 Enum 的值, 要 .value 才能访问到
-    whatErinLikes = Guitar('', 0, Builder.FENDER.value, 'Stratocastor', Type.ELECTRIC.value, Wood.ALDER.value, Wood.ALDER.value)
+    # 这里用的封装的类 GuitarSpec
+    whatErinLikes = GuitarSpec(Builder.FENDER.value, 'Stratocastor', Type.ELECTRIC.value, Wood.ALDER.value, Wood.ALDER.value)
 
     # 4. 寻找吉他
     search_result_guitar = inventory.search(whatErinLikes)
@@ -62,8 +64,8 @@ if __name__ == '__main__':
         print("Erin, you might like this: ")
         for i in search_result_guitar:
             print('''{0}, {1}, {2}, {3} back, {4} top. You have it for only {5} !'''
-                  .format(i.getBuilder(), i.getModel(), i.getTypes(),
-                        i.getBackWood(), i.getTopWood(), i.getPrice()))
+                .format(i.guitar_spec.getBuilder(), i.guitar_spec.getModel(), i.guitar_spec.getTypes(),
+                        i.guitar_spec.getBackWood(), i.guitar_spec.getTopWood(), i.getPrice()))
     else:
         print('Sorry, Erin, we have nothing for you.')
 
