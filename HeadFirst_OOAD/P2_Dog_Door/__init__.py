@@ -12,7 +12,4 @@ __author__ = 'Fangyang'
 # 当出问题时, 要有替换路径达到系统的目标
 # 在编写程序的过程中, 巩固了threading.Timer和unittest单元测试
 
-if __name__ == '__main__':
-    
-
-
+# if __name__ == '__main__':
