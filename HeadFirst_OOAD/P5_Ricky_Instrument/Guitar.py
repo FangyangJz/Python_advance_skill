@@ -8,19 +8,20 @@ __author__ = 'Fangyang'
 from Instrument import Instrument, InstrumentSpec
 
 class Guitar(Instrument):
-    def __init__(self):
+    def __init__(self, serialNumber, price, spec):
         super().__init__(serialNumber, price, spec)
 
 
 class GuitarSpec(InstrumentSpec):
-    def __init__(self, numStrings):
+
+    def __init__(self, builder, model, types, backWood, topWood, numStrings=6):
         super().__init__(builder, model, types, backWood, topWood)
         self._numStrings = numStrings
 
     def getNumStrings(self):
         return self._numStrings
 
-    def matches(self, otherSpec: GuitarSpec):
+    def matches(self, otherSpec):
         if not isinstance(otherSpec, GuitarSpec):
             return False
         elif not super().matches(otherSpec):
@@ -31,5 +32,6 @@ class GuitarSpec(InstrumentSpec):
 
 
 if __name__ == '__main__':
+    pass
 
 

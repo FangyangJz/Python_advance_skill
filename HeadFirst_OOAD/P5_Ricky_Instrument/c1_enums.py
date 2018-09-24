@@ -1,10 +1,3 @@
-# !/usr/bin/env python3
-# -*- coding:utf-8 -*-
-'''
-created by Fangyang on Time:2018/9/18
-'''
-__author__ = 'Fangyang'
-
 
 from enum import Enum, unique  # python中的枚举类
 
@@ -15,7 +8,7 @@ class Type(Enum):
 
 @unique
 class Builder(Enum):
-    FENDER = 'Fender'
+    FENDER = 'Fender' 
     MARTIN ='Martin'
     GIBSON = 'Gibson'
     COLLINGS = 'Collings'
@@ -23,6 +16,7 @@ class Builder(Enum):
     RYAN = 'Ryan'
     PRS = 'PRS'
     ANY = 'ANY'
+
 
 @unique
 class Wood(Enum):
@@ -33,13 +27,3 @@ class Wood(Enum):
     INDIAN_ROSEWOOD = 'indian_rosewood'
     BRAZILIAN_ROSEWOOD = 'brazilian_rosewood'
     MAPLE = 'maple'
-
-@unique
-class Style(Enum):
-    A = 'a'
-    F = 'f'
-
-
-if __name__ == '__main__':
-
-

@@ -1,5 +1,8 @@
 import random
-from c3_RickGuitar_project_encapsulation import Inventory, Guitar, GuitarSpec
+from Inventory import Inventory
+from Guitar import Guitar, GuitarSpec
+from Mandolin import Mandolin, MandolinSpec
+# from Instrument import Instrument
 from c1_enums import Builder, Type, Wood
 
 
@@ -9,10 +12,6 @@ def initializeInventory(guitar_nums=20):
     '''
     Types = ['acoustic', 'electric']
     Builders = ['Fender', 'Martin', 'Gibson', 'Collings', 'Olson', 'Ryan', 'PRS', 'ANY']
-    # Builders = ['Fender', 'Martin']
-    # Wood = [
-    #     'Alder', 'maple'
-    #     ]
     Wood = [
         'Alder', 'sitka', 'Cedar', 'mahogany',
         'indian_rosewood', 'brazilian_rosewood', 'maple'
@@ -32,7 +31,8 @@ def initializeInventory(guitar_nums=20):
         backWood = random.choice(Wood)
         topWood = random.choice(Wood)
         model = 'fixed-test'
-        guitars.append((serialNumber, price, builder, model, types, backWood, topWood))
+        numStrings = 6
+        guitars.append((serialNumber, price, builder, model, types, backWood, topWood, numStrings))
     
     return guitars
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     # 2. 生产仓库对象，将20把吉他入库
     inventory = Inventory()
     for guitar in rand_gen_guitar_list:
-        inventory.addGuitar(*guitar)
+        inventory.addInstrument(*guitar[0:2], GuitarSpec(*guitar[2:]))
 
     # #   查看仓库吉他情况
     # r = inventory.guitars
@@ -65,8 +65,8 @@ if __name__ == '__main__':
         print("Erin, you might like this: ")
         for i in search_result_guitar:
             print('''{0}, {1}, {2}, {3} back, {4} top. You have it for only {5} !'''
-                .format(i.guitar_spec.getBuilder(), i.guitar_spec.getModel(), i.guitar_spec.getTypes(),
-                        i.guitar_spec.getBackWood(), i.guitar_spec.getTopWood(), i.getPrice()))
+                .format(i.getSpec().getBuilder(), i.getSpec().getModel(), i.getSpec().getTypes(),
+                        i.getSpec().getBackWood(), i.getSpec().getTopWood(), i.getPrice()))
     else:
         print('Sorry, Erin, we have nothing for you.')
 

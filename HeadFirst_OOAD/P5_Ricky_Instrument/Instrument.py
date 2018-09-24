@@ -6,7 +6,7 @@ created by Fangyang on Time:2018/9/18
 __author__ = 'Fangyang'
 
 class Instrument(object):
-    def __init__(self, serialNumber, price, spec: InstrumentSpec):
+    def __init__(self, serialNumber, price, spec):
         self._serialNumber = serialNumber
         self._price = price
         self._spec = spec
@@ -25,46 +25,25 @@ class Instrument(object):
 
 
 class InstrumentSpec(object):
-    def __init__(self, builder, model, types, backWood, topWood):
-        self._builder = builder
-        self._model = model
-        self._types = types
-        self._backWood = backWood
-        self._topWood = topWood
+    def __init__(self, properties_dict=None):
+        self.properties = properties_dict
+        # hashable(生命周期里不可变, 字典整体是可哈希的, 里面随便),
+        # MutableMapping(字典里面是可以随便变化的)
 
-    def getBuilder(self):
-        return self._builder
+    def getProperties(self):
+        return self.properties
 
-    def getModel(self):
-        return self._model
-
-    def getTypes(self):
-        return self._types
-
-    def getBackWood(self):
-        return self._backWood
-
-    def getTopWood(self):
-        return self._topWood
+    def getProperty(self, strings):
+        return self.properties.get(strings)
 
     def matches(self, otherSpec):
-        if self._builder != otherSpec.getBuilder():
-            return False
+        # 试了下 两个字典如果键值都相等, 那么就返回true
+        if otherSpec.getProperties() == self.getProperties():
+            return True
+        return False
 
-        if self._model is not None:
-            pass
 
-        if self._types != otherSpec.getTypes():
-            return False
-
-        if self._backWood != otherSpec.getBackWood():
-            return False
-
-        if self._topWood != otherSpec.getTopWood():
-            return False
-
-        return True
-_
 if __name__ == '__main__':
+    pass
 
 
