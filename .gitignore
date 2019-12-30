@@ -1,0 +1,5 @@
+*.pyc
+.idea
+venv
+/AI_related/S02_Pytorch_tutorial_singapore/c01_resnet_cifar10/cifar/
+/AI_related/S03_最好的Pytorch入门_七月在线/p2_词向量/7月在线_text8_pytorch_word_vector_data/
