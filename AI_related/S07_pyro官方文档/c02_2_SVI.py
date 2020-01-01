@@ -34,27 +34,39 @@ def scale_obs(guess):
     return pyro.sample("measurement", dist.Normal(weight, 1.), obs=9.5)
 
 
-def perfect_guide(guess):
-    # 这里的loc和scale是公式推导出来的, 直接给出来weight的后验分布
-    loc = (0.75 ** 2 * guess + 0.95) / (1 + 0.75 ** 2)  # 9.14
-    scale = np.sqrt(0.75 ** 2 / (1 + 0.75 ** 2))  # 0.6
-    return pyro.sample("weight", dist.Normal(loc, scale))
-
-
 def scale_parametrized_guide_constrained(guess):
     a = pyro.param("a", torch.tensor(guess))
     b = pyro.param("b", torch.tensor(1.), constraint=constraints.positive)
-    return pyro.sample("weight", dist.Normal(a, b))  # 上面加了constraints, 要不然这里参数b要写成 torch.abs(b)
+    return pyro.sample("weight", dist.BetaBinomial(a, b))  # 上面加了constraints, 要不然这里参数b要写成 torch.abs(b)
 
 
 if __name__ == '__main__':
-    # pyro.set_rng_seed(101)
+    pyro.set_rng_seed(101)
 
-    # 在已经观察到measurement的条件下, 那么weight就是观测值
-    guess = 10
+    guess = 9.5
     measurement = 9.5
-    print(f"on condition obs=9.5, estimate weight is {scale_obs(10)}")
 
-    print(f"estimate weight is {deferred_conditioned_scale(measurement, guess)}")
-    # print(perfect_guide(10))
+    pyro.clear_param_store()
+    conditioned_scale = pyro.condition(scale, data={"measurement": measurement})
+    svi = pyro.infer.SVI(
+        model=conditioned_scale,
+        guide=scale_parametrized_guide_constrained,
+        optim=pyro.optim.SGD({"lr": 0.001, "momentum": 0.1}),
+        loss=pyro.infer.Trace_ELBO()
+    )
+
+    losses, a, b = [], [], []
+    num_steps = 2500
+    for t in range(num_steps):
+        losses.append(svi.step(guess))
+        ele_a, ele_b = pyro.param("a").item(), pyro.param("b").item()
+        a.append(ele_a)
+        b.append(ele_b)
+
+    plt.plot(losses)
+    plt.title("ELBO")
+    plt.xlabel("step")
+    plt.ylabel("loss")
+    print(f"a={ele_a}, b={ele_b}")
+    plt.show()
     print(1)
