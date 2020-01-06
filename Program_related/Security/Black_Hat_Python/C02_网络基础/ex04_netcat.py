@@ -31,7 +31,7 @@ def main():
     parser.add_argument(
         "-l", "--listen",
         help="listen on [host]:[port] for incoming connections",
-        type=
+        type=int
     )
 
 
