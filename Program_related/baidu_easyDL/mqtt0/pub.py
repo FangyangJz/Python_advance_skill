@@ -5,8 +5,10 @@
 # @Author  : Fangyang
 # @Software: PyCharm
 
-import json
+
 import base64
+import json
+
 import paho.mqtt.client as mqtt
 
 
@@ -24,14 +26,18 @@ if __name__ == '__main__':
     client.on_message = on_message
     client.connect("139.196.127.75", 1883, 600)
 
-    with open("./image.jpg", 'rb') as f:
+    with open("./ex02.png", 'rb') as f:
         content = str(base64.b64encode(f.read()), encoding='utf-8')
     print(type(content))
 
     a = {
         "name": "ddd.jpg",
-        "content": content
+        "content": content,
+        "low_power": False,
     }
+
+    ddd = [i for i in range(10)]
+
     json_str = json.dumps(a)
     client.subscribe("resp")
     client.publish("emqtt", payload=json_str, qos=0)

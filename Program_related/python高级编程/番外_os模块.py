@@ -1,3 +1,4 @@
+import chardet
 import os
 
 # os.access(path, mode)
@@ -48,7 +49,6 @@ file_name = os.listdir('.')
 tran_file_name = [x.encode('gb2312') for x in file_name]
 # print(tran_file_name)
 
-import chardet
 print(chardet.detect(tran_file_name[0]))
 print(tran_file_name[-1])
 print(str(tran_file_name[-1], encoding='utf-8'))

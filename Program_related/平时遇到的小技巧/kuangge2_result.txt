@@ -1,0 +1,6 @@
+Creat_clock -name v_abc -period 10 
+Create_clock -name v_bbc -period 10 
+ 
+Set_false_path -from 
+Set_false_path -to 
+Set_multicycle_path -from -to [get_clocks bbc]
